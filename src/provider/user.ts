@@ -42,6 +42,7 @@ export class User {
         this.user = res.data;
         this.createAuthorizationHeader(this.headers);
         localStorage.setItem('accessToken', this.user.accessToken);
+        document.cookie = `accessToken=${this.user.accessToken}; expires=Thu, 18 Dec 2018 12:00:00 UTC; path=/`;
       }
     }, err => {
       localStorage.removeItem('accessToken');
@@ -59,8 +60,10 @@ export class User {
         this.user = res.data;
         this.createAuthorizationHeader(this.headers);
         localStorage.setItem('accessToken', this.user.accessToken);
+        document.cookie = `accessToken=${this.user.accessToken}; expires=Thu, 18 Dec 2018 12:00:00 UTC; path=/`;
       } else {
         localStorage.removeItem('accessToken');
+        document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       }
     }, err => {
       console.error('ERROR', err);
@@ -73,6 +76,7 @@ export class User {
   logOut() {
     this.user = {userName: '', accessToken: '', email: ''};
     localStorage.removeItem('accessToken');
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 
 }
